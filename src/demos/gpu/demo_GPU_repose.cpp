@@ -167,13 +167,13 @@ int main(int argc, char* argv[]) {
     unsigned int total_frames = (unsigned int)((float)params.time_end * fps);
 
     // write an initial frame
-    char filename[100];
-    sprintf(filename, "%s/step%06d.csv", out_dir.c_str(), currframe);
-    gpu_sys.WriteParticleFile(std::string(filename));
+    char frame_number[8];
+    snprintf(frame_number, sizeof(frame_number), "%06d", currframe);
+    std::string filename = out_dir + "/step" + std::string(frame_number) + ".csv";
+    gpu_sys.WriteParticleFile(filename);
 
-    char mesh_filename[100];
-    sprintf(mesh_filename, "%s/step%06d_mesh", out_dir.c_str(), currframe);
-    gpu_sys.WriteMeshes(std::string(mesh_filename));
+    std::string mesh_filename = out_dir + "/step" + std::string(frame_number) + "_mesh";
+    gpu_sys.WriteMeshes(mesh_filename);
 
     currframe++;
 
@@ -186,10 +186,11 @@ int main(int argc, char* argv[]) {
             break;
 
         printf("Output frame %u of %u\n", currframe, total_frames);
-        sprintf(filename, "%s/step%06d.csv", out_dir.c_str(), currframe);
-        gpu_sys.WriteParticleFile(std::string(filename));
-        sprintf(mesh_filename, "%s/step%06d_mesh", out_dir.c_str(), currframe);
-        gpu_sys.WriteMeshes(std::string(mesh_filename));
+        snprintf(frame_number, sizeof(frame_number), "%06d", currframe
+        filename = out_dir + "/step" + std::string(frame_number) + ".csv";
+        gpu_sys.WriteParticleFile(filename);
+        mesh_filename = out_dir + "/step" + std::string(frame_number) + "_mesh";
+        gpu_sys.WriteMeshes(mesh_filename);
 
         float KE = gpu_sys.GetParticlesKineticEnergy();
         std::cout << "Total kinetic energy: " << KE << std::endl;

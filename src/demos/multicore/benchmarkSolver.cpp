@@ -56,9 +56,14 @@ int count_Y = 2;
 // Generate postprocessing output with current system state.
 // -----------------------------------------------------------------------------
 void OutputData(ChSystemMulticore* sys, int out_frame, double time) {
-    char filename[100];
-    sprintf(filename, "%s/data_%03d.dat", out_folder, out_frame);
-    utils::WriteVisualizationAssets(sys, filename);
+    std::ostringstream filename;
+    filename
+        << out_folder << "/data_"
+        // Frame number is zero padded for nicer alphabetical file sorting
+        // Is 3 digits enough space for all the frames?
+        << std::setw(3) << std::setfill('0') << render_frame + 1
+        << ".dat";
+    utils::WriteVisualizationAssets(sys, filename.str());
     std::cout << "time = " << time << std::flush << std::endl;
 }
 

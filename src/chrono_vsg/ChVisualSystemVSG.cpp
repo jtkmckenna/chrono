@@ -905,7 +905,7 @@ bool ChVisualSystemVSG::Run() {
 void ChVisualSystemVSG::Render() {
     if (m_write_images && m_frame_number > 0) {
         char buf[300];
-        sprintf(buf, "%s/img_%04d.png", m_image_dir.c_str(), m_frame_number);
+        snprintf(buf, sizeof(buf), "%s/img_%04d.png", m_image_dir.c_str(), m_frame_number);
         WriteImageToFile(std::string(buf));
     }
 

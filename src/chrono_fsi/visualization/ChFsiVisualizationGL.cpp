@@ -41,10 +41,10 @@ class FSIStatsGL : public opengl::ChOpenGLStats {
         text.Render("Flex body BCE:  " + std::to_string(num_flex_bce), screen.LEFT, screen.TOP - 4 * screen.SPACING,
                     screen.SX, screen.SY);
 
-        sprintf(buffer, "TIME: %04f", sys.GetChTime());
+        snprintf(buffer, sizeof(buffer), "TIME: %04f", sys.GetChTime());
         text.Render(buffer, screen.LEFT, screen.TOP - 6 * screen.SPACING, screen.SX, screen.SY);
 
-        sprintf(buffer, "FPS:  %04d", int(fps));
+        snprintf(buffer, sizeof(buffer), "FPS:  %04d", int(fps));
         text.Render(buffer, screen.LEFT, screen.TOP - 7 * screen.SPACING, screen.SX, screen.SY);
     }
 

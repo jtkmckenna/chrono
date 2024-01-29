@@ -1129,7 +1129,7 @@ void ChBlender::ExportItemState(ChStreamOutAsciiFile& state_file,
 // The user should call this function in the while() loop of the simulation, once per frame.
 void ChBlender::ExportData() {
     char fullname[200];
-    sprintf(fullname, "%s%05d", out_data_filename.c_str(), framenumber);
+    snprintf(fullname, sizeof(fullname), "%s%05d", out_data_filename.c_str(), framenumber);
     ExportData(out_path + "/" + std::string(fullname));
 }
 

@@ -410,9 +410,14 @@ int main(int argc, char* argv[]) {
 
         // Output POV-Ray data
         if (pov_output && sim_frame % pov_steps == 0) {
-            char filename[100];
-            sprintf(filename, "%s/data_%04d.dat", pov_dir.c_str(), pov_frame + 1);
-            utils::WriteVisualizationAssets(sys, filename);
+                std::ostringstream filename;
+                filename
+                    << pov_dir << "/data_"
+                    // Frame number is zero padded for nicer alphabetical file sorting
+                    // Is 4 digits enough space for all the frames?
+                    << std::setw(4) << std::setfill('0') << render_frame + 1
+                    << ".dat";
+            utils::WriteVisualizationAssets(sys, filename.str());
             pov_frame++;
         }
 

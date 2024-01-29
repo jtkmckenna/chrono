@@ -432,8 +432,13 @@ int main(int argc, char* argv[]) {
 
         // POV-Ray output
         if (povray && sim_frame == next_povray_frame) {
-            char filename[100];
-            sprintf(filename, "%s/data_%03d.dat", pov_dir.c_str(), povray_frame + 1);
+            std::ostringstream filename;
+            filename
+                << pov_dir << "/data_"
+                // Frame number is zero padded for nicer alphabetical file sorting
+                // Is 3 digits enough space for all the frames?
+                << std::setw(3) << std::setfill('0') << render_frame + 1
+                << ".dat";
             utils::WriteVisualizationAssets(sys, filename);
 
             std::cout << "Povray output at time " << time << "  " << filename << std::endl;
@@ -635,7 +640,7 @@ void TimingOutput(chrono::ChSystem* mSys, chrono::ChStreamOutAsciiFile* ofile) {
 
     if (ofile) {
         char buf[200];
-        sprintf(buf, "%8.5f  %7.4f  %7.4f  %7.4f  %7.4f  %7.4f  %7d  %7d  %7d  %7.4f\n", TIME, STEP, BROD, NARR, SOLVER,
+        snprintf(buf, sizeof(buf), "%8.5f  %7.4f  %7.4f  %7.4f  %7.4f  %7.4f  %7d  %7d  %7d  %7.4f\n", TIME, STEP, BROD, NARR, SOLVER,
                 UPDT, BODS, CNTC, REQ_ITS, RESID);
         *ofile << buf;
     }

@@ -149,7 +149,7 @@ namespace HACD
             if (m_callBack)
             {
                 char msg[1024];
-                sprintf(msg, "nCC " SIZET_FMT "\n", m_graph.m_nCCs);
+                snprintf(msg,sizeof(msg), "nCC " SIZET_FMT "\n", m_graph.m_nCCs);
                 (*m_callBack)(msg, 0.0, 0.0,  m_graph.GetNVertices());
                 
             }
@@ -247,7 +247,7 @@ namespace HACD
             progress = f * 100.0 / m_nTriangles;
             if (fabs(progress-progressOld) > ptgStep && m_callBack)
             {
-				sprintf(msg, "%3.2f %% \t \t \r", progress);
+				snprintf(msg,sizeof(msg), "%3.2f %% \t \t \r", progress);
 				(*m_callBack)(msg, progress, 0.0,  m_nTriangles);
                 progressOld = progress;
             }
@@ -335,7 +335,7 @@ namespace HACD
 					progress = completed * 100.0 / m_nTriangles;
 					if (fabs(progress-progressOld) > ptgStep && m_callBack)
 					{
-						sprintf(msg, "%3.2f %% \t \t \r", progress);
+						snprintf(msg,sizeof(msg), "%3.2f %% \t \t \r", progress);
 						(*m_callBack)(msg, progress, 0.0,  m_nTriangles);
 						progressOld = progress;
 					}
@@ -641,7 +641,7 @@ namespace HACD
             progress = 100.0-m_graph.GetNVertices() * 100.0 / m_nTriangles;
             if (fabs(progress-progressOld) > ptgStep && m_callBack)
             {
-				sprintf(msg, "%3.2f %% V = %lu \t C = %f \t \t \r", progress, static_cast<unsigned long>(m_graph.GetNVertices()), globalConcavity);
+				snprintf(msg,sizeof(msg), "%3.2f %% V = %lu \t C = %f \t \t \r", progress, static_cast<unsigned long>(m_graph.GetNVertices()), globalConcavity);
 				(*m_callBack)(msg, progress, globalConcavity,  m_graph.GetNVertices());
                 progressOld = progress;
 				if (progress > 99.0)
@@ -680,7 +680,7 @@ namespace HACD
                 {
 					if ((!condition1) && m_callBack)
 					{
-						sprintf(msg, "\n-> %lu\t%f\t%f\t%f\n", m_pqueue.size(), m_graph.m_vertices[v1].m_surf*100.0/m_area, m_graph.m_vertices[v2].m_surf*100.0/m_area, m_graph.m_edges[currentEdge.m_name].m_concavity);
+						snprintf(msg,sizeof(msg), "\n-> %lu\t%f\t%f\t%f\n", m_pqueue.size(), m_graph.m_vertices[v1].m_surf*100.0/m_area, m_graph.m_vertices[v2].m_surf*100.0/m_area, m_graph.m_edges[currentEdge.m_name].m_concavity);
 						(*m_callBack)(msg, progress, globalConcavity,  m_graph.GetNVertices());
 					}
 					globalConcavity = std::max<double>(globalConcavity ,m_graph.m_edges[currentEdge.m_name].m_concavity);
@@ -880,7 +880,7 @@ namespace HACD
                 if (m_callBack) 
                 {
                     char msg[1024];
-                    sprintf(msg, "\t CH(" SIZET_FMT ") \t %lu \t %lf \t " SIZET_FMT " \t %f \t " SIZET_FMT "\n", v, static_cast<unsigned long>(p), m_graph.m_vertices[v].m_concavity, m_graph.m_vertices[v].m_distPoints.Size(),  m_graph.m_vertices[v].m_surf*100.0/m_area, m_graph.m_vertices[v].m_ancestors.size());
+                    snprintf(msg,sizeof(msg), "\t CH(" SIZET_FMT ") \t %lu \t %lf \t " SIZET_FMT " \t %f \t " SIZET_FMT "\n", v, static_cast<unsigned long>(p), m_graph.m_vertices[v].m_concavity, m_graph.m_vertices[v].m_distPoints.Size(),  m_graph.m_vertices[v].m_surf*100.0/m_area, m_graph.m_vertices[v].m_ancestors.size());
 					(*m_callBack)(msg, 0.0, 0.0, m_nClusters);
 					p++;
                 }
@@ -889,7 +889,7 @@ namespace HACD
 		}
         if (m_callBack)
         {
-			sprintf(msg, "# clusters =  %lu \t C = %f\n", static_cast<unsigned long>(m_nClusters), globalConcavity);
+			snprintf(msg,sizeof(msg), "# clusters =  %lu \t C = %f\n", static_cast<unsigned long>(m_nClusters), globalConcavity);
 			(*m_callBack)(msg, progress, globalConcavity,  m_graph.GetNVertices());
         }
 
@@ -1097,7 +1097,7 @@ namespace HACD
             if (m_callBack)
             {
                 char msg[1024];
-                sprintf(msg, "Saving %s\n", fileName);
+                snprintf(msg,sizeof(msg), "Saving %s\n", fileName);
                 (*m_callBack)(msg, 0.0, 0.0, m_graph.GetNVertices());
             }
             Material mat;
@@ -1132,7 +1132,7 @@ namespace HACD
             if (m_callBack)
             {
                 char msg[1024];
-                sprintf(msg, "Error saving %s\n", fileName);
+                snprintf(msg,sizeof(msg), "Error saving %s\n", fileName);
                 (*m_callBack)(msg, 0.0, 0.0, m_graph.GetNVertices());
             }
             return false;

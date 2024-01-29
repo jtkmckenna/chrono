@@ -166,9 +166,9 @@ int main(int argc, char* argv[]) {
     int currframe = 0;
     for (double t = 0; t < (double)params.time_end; t += frame_step, currframe++) {
         std::cout << "Rendering frame " << (currframe + 1) << " of " << total_frames << std::endl;
-        char filename[100];
-        sprintf(filename, "%s/step%06d.csv", out_dir.c_str(), currframe);
-        gpu_sys.WriteParticleFile(std::string(filename));
+        char frame_number[8];
+        snprintf(frame_number, sizeof(frame_number), "%06d", currframe);
+        gpu_sys.WriteParticleFile( out_dir + "/step" + std::string(frame_number) + ".csv");
 
         gpu_sys.AdvanceSimulation((float)frame_step);
     }

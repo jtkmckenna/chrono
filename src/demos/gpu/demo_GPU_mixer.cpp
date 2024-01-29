@@ -179,12 +179,12 @@ int main(int argc, char* argv[]) {
 
         if (step % out_steps == 0) {
             std::cout << "Output frame " << (currframe + 1) << " of " << total_frames << std::endl;
-            char filename[100];
-            char mesh_filename[100];
-            sprintf(filename, "%s/step%06u.csv", out_dir.c_str(), currframe);
-            sprintf(mesh_filename, "%s/step%06u_mesh", out_dir.c_str(), currframe++);
-            gpu_sys.WriteParticleFile(std::string(filename));
-            gpu_sys.WriteMeshes(std::string(mesh_filename));
+            char frame_number[8];
+            snprintf(frame_number, sizeof(frame_number), "%06u", currframe++);
+            std::string filename = out_dir + "/step" + std::string(frame_number) + ".csv";
+            std::string mesh_filename = out_dir + "/step" + std::string(frame_number) + "_mesh";
+            gpu_sys.WriteParticleFile(filename);
+            gpu_sys.WriteMeshes(mesh_filename);
 
             ChVector<> force;
             ChVector<> torque;

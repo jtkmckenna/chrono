@@ -264,8 +264,14 @@ int main(int argc, char* argv[]) {
     while (time < tend) {
         if (step_number % render_steps == 0) {
             // Output render data
-            sprintf(filename, "%s/data_%03d.dat", pov_dir.c_str(), render_frame + 1);
-            utils::WriteVisualizationAssets(vehicle.GetSystem(), filename);
+            std::ostringstream filename;
+            filename
+                << pov_dir << "/data_"
+                // Frame number is zero padded for nicer alphabetical file sorting
+                // Is 3 digits enough space for all the frames?
+                << std::setw(3) << std::setfill('0') << render_frame + 1
+                << ".dat";
+            utils::WriteVisualizationAssets(vehicle.GetSystem(), filename.str());
             std::cout << "Output frame:   " << render_frame << std::endl;
             std::cout << "Sim frame:      " << step_number << std::endl;
             std::cout << "Time:           " << time << std::endl;

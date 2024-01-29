@@ -392,9 +392,14 @@ int main(int argc, char* argv[]) {
         vis->RenderFrame(ChFrame<>(driver.GetSentinelLocation()));
 
         if (output_images && sim_frame % render_steps == 0) {
-            char filename[200];
-            sprintf(filename, "%s/image_%05d.bmp", out_dir.c_str(), render_frame);
-            vis->WriteImageToFile(filename);
+            std::ostringstream filename;
+            filename
+                << out_dir << "/image_"
+                // Frame number is zero padded for nicer alphabetical file sorting
+                // Is 5 digits enough space for all the frames?
+                << std::setw(5) << std::setfill('0') << render_frame
+                << ".bmp";
+            vis->WriteImageToFile(filename.str());
             render_frame++;
         }
 

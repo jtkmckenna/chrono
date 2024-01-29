@@ -129,8 +129,9 @@ int main(int argc, char* argv[]) {
     int currframe = 0;
     unsigned int total_frames = (unsigned int)((float)params.time_end * fps);
 
-    char filename[100];
-    sprintf(filename, "%s/step%06d.csv", out_dir.c_str(), currframe++);
+    char frame_number[8];
+    snprintf(frame_number, sizeof(frame_number), "%06d", currframe++);
+    std::string filename = out_dir + "/step" + std::string(frame_number) + ".csv";
     gpu_sys.WriteParticleFile(std::string(filename));
 
     std::cout << "frame step is " << frame_step << std::endl;
@@ -140,7 +141,8 @@ int main(int argc, char* argv[]) {
         gpu_sys.AdvanceSimulation(frame_step);
         curr_time += frame_step;
         printf("rendering frame %u of %u\n", currframe, total_frames);
-        sprintf(filename, "%s/step%06d.csv", out_dir.c_str(), currframe++);
+        snprintf(frame_number, sizeof(frame_number), "%06d", currframe++);
+        filename = out_dir + "/step" + std::string(frame_number) + ".csv";
         gpu_sys.WriteParticleFile(std::string(filename));
     }
 
